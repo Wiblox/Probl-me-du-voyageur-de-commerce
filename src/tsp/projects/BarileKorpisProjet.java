@@ -11,6 +11,9 @@ public class BarileKorpisProjet extends Project{
      */
     public BarileKorpisProjet(Evaluation evaluation) throws InvalidProjectException {
         super(evaluation);
+        this.addAuthor ("Nicolas Barile");
+        this.addAuthor ("Vivien Korpis");
+        this.setMethodName ("Premier Algo de Recherche");
     }
 
     @Override
