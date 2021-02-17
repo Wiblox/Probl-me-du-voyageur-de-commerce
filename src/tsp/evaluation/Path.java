@@ -28,6 +28,7 @@ public final class Path
 	 */
 	public Path (int [] path)
 	{
+		System.out.println(path);
 		this.path = path;
 	}
 	
