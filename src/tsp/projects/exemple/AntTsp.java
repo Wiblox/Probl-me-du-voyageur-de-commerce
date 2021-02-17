@@ -5,7 +5,9 @@ import tsp.evaluation.Path;
 import tsp.projects.DemoProject;
 import tsp.projects.InvalidProjectException;
 
+import java.io.File;
 import java.io.FileReader;
+import java.io.FileWriter;
 import java.io.IOException;
 import java.util.ConcurrentModificationException;
 import java.util.LinkedList;
@@ -24,13 +26,13 @@ public class AntTsp extends DemoProject {
 	// new trail deposit coefficient;
 	private double Q = 500;
 	// number of ants used = numAntFactor*numTowns
-	private double numAntFactor = 0.8;
+	private double numAntFactor = 0.002;
 	// probability of pure random selection of the next town
 	private double pr = 0.01;
 	
 	// Reasonable number of iterations
 	// - results typically settle down by 500
-	private int maxIterations = 200;
+	private int maxIterations = 10;
 	
 	public int n = 0; // # towns
 	public int m = 0; // # ants
@@ -49,6 +51,8 @@ public class AntTsp extends DemoProject {
 	public AntTsp(Evaluation evaluation) throws InvalidProjectException {
 		
 		super(evaluation);
+		this.addAuthor ("KV & BN");
+		this.setMethodName ("ANT");
 	}
 	
 	
@@ -57,9 +61,11 @@ public class AntTsp extends DemoProject {
 	 */
 	@Override
 	public void initialization() {
-		
+
 		readGraph();
-		
+		for (int i = 0; i < n; i++)
+			for (int j = 0; j < n; j++)
+				trails[i][j] = c;
 	}
 	
 	
@@ -69,22 +75,37 @@ public class AntTsp extends DemoProject {
 	@Override
 	public void loop() {
 		
-		solve();
+	
+		
+
+			setupAnts();
+			moveAnts();
+			updateTrails();
+			updateBest();
+		
+
 		
 	}
 	public void readGraph()  {
 		//construire matrice d'adjacence
-		graph = new double[problem.getLength()][problem.getLength()];
-		for(int i=0;i<=problem.getLength();i++){
-			for(int j=0;j<=problem.getLength();j++) {
-				if(i==j){
-				graph[i][j]=0;}
-				else {graph[i][j]=problem.getCoordinates(i).distance(problem.getCoordinates(j));}
-			}
-		}
 		
-		int n = problem.getLength();
-		m = (int) (n * numAntFactor);
+	
+			
+			graph = new double[problem.getLength()][problem.getLength()];
+			
+			for(int i=0;i<=problem.getLength()-1;i++){
+			String s ="";
+			for(int j=0;j<=problem.getLength()-1;j++) {
+				if(i==j){
+				graph[i][j]=99999;}
+				else {graph[i][j]=problem.getCoordinates(i).distance(problem.getCoordinates(j));}
+				//s= s + " - " +  graph[i][j];
+			}
+			//myWriter.write(s+"\n");
+			
+			}
+		 n = problem.getLength();
+		m=10;
 		
 		// all memory allocations done here
 		trails = new double[n][n];
@@ -92,21 +113,28 @@ public class AntTsp extends DemoProject {
 		ants = new Ant[m];
 		for (int j = 0; j < m; j++)
 			ants[j] = new Ant();
+			
+			
+		
 	}
 	
 	// Ant class. Maintains tour and tabu information.
 	private class Ant {
-		public int tour[] = new int[graph.length];
+		public int tour[] = new int[problem.getLength()];
 		// Maintain visited list for towns, much faster
 		// than checking if in tour so far.
-		public boolean visited[] = new boolean[graph.length];
+		public boolean visited[] = new boolean[problem.getLength()];
 		
 		public void visitTown(int town) {
-			tour[currentIndex + 1] = town;
-			visited[town] = true;
-		}
 		
-		public boolean visited(int i) {
+				
+				tour[currentIndex + 1] = town;
+				
+				visited[town] = true;
+	
+		}
+			
+			public boolean visited(int i) {
 			return visited[i];
 		}
 		
@@ -142,6 +170,8 @@ public class AntTsp extends DemoProject {
 	// [1] describes how these are calculated.
 	// In short: ants like to follow stronger and shorter trails more.
 	private void probTo(Ant ant) {
+
+		
 		int i = ant.tour[currentIndex];
 		
 		double denom = 0.0;
@@ -160,41 +190,50 @@ public class AntTsp extends DemoProject {
 				probs[j] = numerator / denom;
 			}
 		}
+		}
 		
-	}
-	
-	// Given an ant select the next town based on the probabilities
+		// Given an ant select the next town based on the probabilities
 	// we assign to each town. With pr probability chooses
 	// totally randomly (taking into account tabu list).
 	private int selectNextTown(Ant ant) {
-		// sometimes just randomly select
-		if (rand.nextDouble() < pr) {
-			int t = rand.nextInt(n - currentIndex); // random town
-			int j = -1;
-			for (int i = 0; i < n; i++) {
-				if (!ant.visited(i))
-					j++;
-				if (j == t)
-					return i;
+		
+		
+			
+			// sometimes just randomly select
+			if (rand.nextDouble() < pr) {
+				int t = rand.nextInt(n - currentIndex); // random town
+				int j = -1;
+				for (int i = 0; i < n; i++) {
+					if (!ant.visited(i))
+						j++;
+					if (j == t){
+						
+						return i;}
+				}
+				
 			}
 			
-		}
-		// calculate probabilities for each town (stored in probs)
-		probTo(ant);
-		// randomly select according to probs
-		double r = rand.nextDouble();
-		double tot = 0;
-		for (int i = 0; i < n; i++) {
-			tot += probs[i];
-			if (tot >= r)
-				return i;
-		}
+			// calculate probabilities for each town (stored in probs)
+			probTo(ant);
+			// randomly select according to probs
+			double r = rand.nextDouble();
+			double tot = 0;
+			
+			for (int i = 0; i < n; i++) {
+				tot += probs[i];
+				if (tot >= r){
+					
+					return i;}
+			}
 		
-		throw new RuntimeException("Not supposed to get here.");
-	}
+			throw new RuntimeException("Not supposed to get here.");
 	
-	// Update trails based on ants tours
+	}
+		
+		// Update trails based on ants tours
 	private void updateTrails() {
+		
+
 		// evaporation
 		for (int i = 0; i < n; i++)
 			for (int j = 0; j < n; j++)
@@ -209,34 +248,51 @@ public class AntTsp extends DemoProject {
 			trails[a.tour[n - 1]][a.tour[0]] += contribution;
 		}
 	}
-	
-	// Choose the next town for all ants
+		
+		// Choose the next town for all ants
 	private void moveAnts() {
-		// each ant follows trails...
+	
+	
+			
+			
+			// each ant follows trails...
 		while (currentIndex < n - 1) {
 			for (Ant a : ants)
 				a.visitTown(selectNextTown(a));
 			currentIndex++;
 		}
-	}
-	
-	// m ants with random start city
+}
+		
+		
+		// m ants with random start city
 	private void setupAnts() {
-		currentIndex = -1;
+		
+
+			currentIndex = -1;
 		for (int i = 0; i < m; i++) {
 			ants[i].clear(); // faster than fresh allocations.
-			ants[i].visitTown(rand.nextInt(n));
+			
+			int a = rand.nextInt(n );
+			
+			ants[i].visitTown(a);
+			
 		}
 		currentIndex++;
+			
+	
 		
 	}
 	
+	
 	private void updateBest() {
+		
+
 		if (bestTour == null) {
 			bestTour = ants[0].tour;
 			bestTourLength = ants[0].tourLength();
 		}
-		for (Ant a : ants) {
+			
+			for (Ant a : ants) {
 			if (a.tourLength() < bestTourLength) {
 				bestTourLength = a.tourLength();
 				bestTour = a.tour.clone();
@@ -246,36 +302,21 @@ public class AntTsp extends DemoProject {
 				this.evaluation.evaluate (path);
 			}
 		}
-	}
 	
-	public static String tourToString(int tour[]) {
+		
+
+	}
+		
+		
+		public static String tourToString(int tour[]) {
 		String t = new String();
 		for (int i : tour)
 			t = t + " " + i;
 		return t;
 	}
 	
-	public int[] solve() {
-		// clear trails
-		for (int i = 0; i < n; i++)
-			for (int j = 0; j < n; j++)
-				trails[i][j] = c;
-		
-		int iteration = 0;
-		// run for maxIterations
-		// preserve best tour
-		while (iteration < maxIterations) {
-			setupAnts();
-			moveAnts();
-			updateTrails();
-			updateBest();
-			iteration++;
-		}
-		// Subtract n because we added one to edges on load
-		System.out.println("Best tour length: " + (bestTourLength - n));
-		System.out.println("Best tour:" + tourToString(bestTour));
-		return bestTour.clone();
-	}
+
+	
 	
 
 }
