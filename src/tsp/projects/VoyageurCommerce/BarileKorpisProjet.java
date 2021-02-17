@@ -1,8 +1,10 @@
-package tsp.projects;
+package tsp.projects.VoyageurCommerce;
 
 import tsp.evaluation.Evaluation;
+import tsp.projects.InvalidProjectException;
+import tsp.projects.Project;
 
-public class BarileKorpisProjet extends Project{
+public class BarileKorpisProjet extends Project {
     /**
      * Constructeur
      *
