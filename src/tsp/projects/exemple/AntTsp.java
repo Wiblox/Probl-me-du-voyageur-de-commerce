@@ -9,36 +9,32 @@ import java.io.File;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.nio.file.FileSystem;
+import java.nio.file.FileSystems;
 import java.util.ConcurrentModificationException;
 import java.util.LinkedList;
 import java.util.Random;
 
 public class AntTsp extends DemoProject {
-	// Algorithm parameters:
-	// original amount of trail
+
 	private double c = 1.0;
-	// trail preference
 	private double alpha = 1;
-	// greedy preference
 	private double beta = 5;
-	// trail evaporation coefficient
 	private double evaporation = 0.5;
-	// new trail deposit coefficient;
 	private double Q = 500;
-	// number of ants used = numAntFactor*numTowns
-	private double numAntFactor = 0.002;
-	// probability of pure random selection of the next town
-	private double pr = 0.01;
+	private double numAntFactor = 0.1;
+	private double pr = 0.0005;
 	
-	// Reasonable number of iterations
-	// - results typically settle down by 500
-	private int maxIterations = 10;
 	
+
 	public int n = 0; // # towns
 	public int m = 0; // # ants
 	private double graph[][] = null;
 	private double trails[][] = null;
 	private Ant ants[] = null;
+	private int rapide[] = null;
+	private double distance[] = null;
+	
 	private Random rand = new Random();
 	private double probs[] = null;
 	
@@ -94,19 +90,24 @@ public class AntTsp extends DemoProject {
 			graph = new double[problem.getLength()][problem.getLength()];
 			
 			for(int i=0;i<=problem.getLength()-1;i++){
-			String s ="";
 			for(int j=0;j<=problem.getLength()-1;j++) {
 				if(i==j){
 				graph[i][j]=99999;}
 				else {graph[i][j]=problem.getCoordinates(i).distance(problem.getCoordinates(j));}
-				//s= s + " - " +  graph[i][j];
 			}
-			//myWriter.write(s+"\n");
 			
 			}
 		 n = problem.getLength();
-		m=10;
+			
+		m= (int) Math.sqrt((n*numAntFactor));
+		if(m<20){
+			m=20;
+		}
+
+		rapide= new int[n];
+		distance = new double[n];
 		
+
 		// all memory allocations done here
 		trails = new double[n][n];
 		probs = new double[n];
@@ -116,9 +117,9 @@ public class AntTsp extends DemoProject {
 			
 			
 		
-	}
-	
-	// Ant class. Maintains tour and tabu information.
+}
+		
+		// Ant class. Maintains tour and tabu information.
 	private class Ant {
 		public int tour[] = new int[problem.getLength()];
 		// Maintain visited list for towns, much faster
@@ -201,6 +202,8 @@ public class AntTsp extends DemoProject {
 			
 			// sometimes just randomly select
 			if (rand.nextDouble() < pr) {
+				
+			
 				int t = rand.nextInt(n - currentIndex); // random town
 				int j = -1;
 				for (int i = 0; i < n; i++) {
@@ -267,7 +270,6 @@ public class AntTsp extends DemoProject {
 		// m ants with random start city
 	private void setupAnts() {
 		
-
 			currentIndex = -1;
 		for (int i = 0; i < m; i++) {
 			ants[i].clear(); // faster than fresh allocations.
@@ -282,7 +284,7 @@ public class AntTsp extends DemoProject {
 	
 		
 	}
-	
+
 	
 	private void updateBest() {
 		
@@ -294,26 +296,24 @@ public class AntTsp extends DemoProject {
 			
 			for (Ant a : ants) {
 			if (a.tourLength() < bestTourLength) {
+				try {
+					File myObj = new File(problem.getLength() + "chemin.txt");
+					myObj.createNewFile();
+					FileWriter myWriter = new FileWriter(myObj.getAbsoluteFile(), false);
 				bestTourLength = a.tourLength();
 				bestTour = a.tour.clone();
-				System.out.println("tour = " +bestTourLength);
-				System.out.println("tour :  " +bestTour);
 				Path path = new Path (bestTour);
+				
 				this.evaluation.evaluate (path);
+					myWriter.write(path.toString());
+					myWriter.close();
+				} catch (IOException e) {
+					e.printStackTrace();
+				}
 			}
-		}
+	}}
+		
 	
-		
-
-	}
-		
-		
-		public static String tourToString(int tour[]) {
-		String t = new String();
-		for (int i : tour)
-			t = t + " " + i;
-		return t;
-	}
 	
 
 	

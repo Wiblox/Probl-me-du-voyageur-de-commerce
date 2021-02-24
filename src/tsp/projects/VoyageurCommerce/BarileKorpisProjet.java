@@ -4,7 +4,7 @@ import tsp.evaluation.Evaluation;
 import tsp.projects.InvalidProjectException;
 import tsp.projects.Project;
 
-public class BarileKorpisProjet extends Project {
+public class BarileKorpisProjet{
     /**
      * Constructeur
      *
@@ -12,18 +12,16 @@ public class BarileKorpisProjet extends Project {
      * @throws InvalidProjectException
      */
     public BarileKorpisProjet(Evaluation evaluation) throws InvalidProjectException {
-        super(evaluation);
-        this.addAuthor ("Nicolas Barile");
-        this.addAuthor ("Vivien Korpis");
-        this.setMethodName ("Premier Algo de Recherche");
+        //super(evaluation);
+        //this.addAuthor ("Nicolas Barile");
+        //this.addAuthor ("Vivien Korpis");
+        //this.setMethodName ("Premier Algo de Recherche");
     }
 
-    @Override
     public void initialization() {
 
     }
 
-    @Override
     public void loop() {
 
     }
