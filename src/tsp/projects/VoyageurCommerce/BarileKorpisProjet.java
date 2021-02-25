@@ -15,7 +15,7 @@ public class BarileKorpisProjet{
         //super(evaluation);
         //this.addAuthor ("Nicolas Barile");
         //this.addAuthor ("Vivien Korpis");
-        //this.setMethodName ("Premier Algo de Recherche");
+        //this.setMethodName ("Algorithme Génétique");
     }
 
     public void initialization() {
