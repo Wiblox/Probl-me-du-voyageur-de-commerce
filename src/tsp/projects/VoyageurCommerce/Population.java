@@ -17,9 +17,13 @@ public class Population {
             for(int i = 0; i < taillePopulation; i++) {
                 nouveauCircuit = new Circuit(gestionnaireVilles);
                 nouveauCircuit.generateIndividu();
-                circuits.add(i,nouveauCircuit);
+                sauvegarderCircuit(i,nouveauCircuit);
             }
         }
+    }
+
+    public void sauvegarderCircuit(int index, Circuit circuit) {
+        circuits.add(index,circuit);
     }
 
     public Circuit getCircuits(int i) {
