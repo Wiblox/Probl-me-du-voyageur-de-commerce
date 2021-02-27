@@ -37,8 +37,6 @@ public class Circuit {
 
     public Coordinates getVille(int posCircuit) { return circuit.get(posCircuit); }
 
-    public void setVilleCircuit(Coordinates ville, int i) { circuit.add(i, ville); }
-
     public void setVille(int posCircuit, Coordinates ville) {
         circuit.add(posCircuit, ville);
         this.fitness = 0.0;
