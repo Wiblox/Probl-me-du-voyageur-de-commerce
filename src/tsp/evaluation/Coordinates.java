@@ -24,8 +24,15 @@ public final class Coordinates
 	 */
 	public double distance (Coordinates c)
 	{
-		double dx = this.x - c.x;
-		double dy = this.y - c.y;
+		//double dx = this.x - c.x;
+		//double dy = this.y - c.y;
+
+		double dx = (c.x - this.x)*40000 * Math.cos((this.y - c.y) * 3.14/360 ) / 360;
+		double dy = (this.y - c.y)*40000/360;
 		return Math.sqrt (dx * dx + dy * dy);
+	}
+
+	public String getCoordinates(){
+		return "x =" + x + ", y =" + y;
 	}
 }
