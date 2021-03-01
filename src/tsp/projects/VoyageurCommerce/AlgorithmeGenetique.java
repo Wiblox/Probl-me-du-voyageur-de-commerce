@@ -10,6 +10,7 @@ public class AlgorithmeGenetique {
 
     public final double tauxMutation = 0.015;
     public final int tailleTournoi = 5;
+    public final int populationSauvegarder = 1;
 
     public AlgorithmeGenetique(GestionnaireVilles gestionnaireVilles) {
         this.gestionnaireVilles = gestionnaireVilles;
@@ -17,19 +18,29 @@ public class AlgorithmeGenetique {
 
     public Population evoluerPopulation(Population pop) {
         Population nouvellePopulation = new Population(gestionnaireVilles, pop.taillePopulation(), false);
-        nouvellePopulation.sauvegarderCircuit(0,pop.getFittest());
 
-        for(int i = 1; i < nouvellePopulation.taillePopulation(); i++) {
+        //nouvellePopulation.sauvegarderCircuit(0, pop.getFittest());
+
+        for(int u = 0; u < populationSauvegarder; u++) {
+            nouvellePopulation.sauvegarderCircuit(u, pop.getFittest());
+        }
+
+        for(int i = populationSauvegarder; i < nouvellePopulation.taillePopulation(); i++) {
             Circuit parent1 = selectionTournois(pop);
             Circuit parent2 = selectionTournois(pop);
+
             Circuit enfant = crossover(parent1, parent2);
 
             nouvellePopulation.sauvegarderCircuit(i, enfant);
         }
 
-        for(int j = 1; j < nouvellePopulation.taillePopulation(); j++) {
+        for(int j = populationSauvegarder; j < nouvellePopulation.taillePopulation(); j++) {
             muter(nouvellePopulation.getCircuits(j));
         }
+
+        //for(int k = nouvellePopulation.taillePopulation() - populationSauvegarder; k < nouvellePopulation.taillePopulation(); k++){
+        //    nouvellePopulation.sauvegarderCircuit(k, nouvellePopulation.populationAlea());
+        //}
 
         return nouvellePopulation;
     }
@@ -49,11 +60,11 @@ public class AlgorithmeGenetique {
             }
         }
 
-        for(int j = 0; j < enfant.lengthCircuit(); j++) {
+        for(int j = 0; j < parent2.lengthCircuit(); j++) {
             if ( !( enfant.contientVille(parent2.getVille(j)) ) ){
                 for(int k = 0; k < enfant.lengthCircuit(); k++){
                     if(enfant.getVille(k) == null) {
-                        enfant.setVille(k, parent2.getVille(k));
+                        enfant.setVille(k, parent2.getVille(j));
                         break;
                     }
                 }
