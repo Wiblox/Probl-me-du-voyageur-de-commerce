@@ -1,6 +1,4 @@
-package tsp.projects.VoyageurCommerce;
-
-import tsp.evaluation.Coordinates;
+package tsp.projects.AlgorithmeGenetique;
 
 import java.util.ArrayList;
 

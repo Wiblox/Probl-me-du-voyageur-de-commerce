@@ -1,4 +1,4 @@
-package tsp.projects.VoyageurCommerce;
+package tsp.projects.AlgorithmeGenetique;
 
 import tsp.evaluation.Problem;
 

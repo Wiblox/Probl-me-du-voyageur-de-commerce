@@ -1,8 +1,7 @@
-package tsp.projects.VoyageurCommerce;
+package tsp.projects.AlgorithmeGenetique;
 
 import tsp.evaluation.Evaluation;
 import tsp.projects.InvalidProjectException;
-import tsp.projects.Project;
 
 public class BarileKorpisProjet{
     /**
