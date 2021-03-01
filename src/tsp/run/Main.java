@@ -64,7 +64,7 @@ public final class Main extends OutputWriter
 		Solution solution = null;
 		try
 		{
-			System.setOut (new PrintStream (new OutputStream () {@Override public void write (int b) throws IOException {}}));
+		//	System.setOut (new PrintStream (new OutputStream () {@Override public void write (int b) throws IOException {}}));
 			future.get (Main.NB_SECONDS, TimeUnit.SECONDS);
 		}
 		catch (TimeoutException e)

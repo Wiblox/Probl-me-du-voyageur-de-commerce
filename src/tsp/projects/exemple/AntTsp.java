@@ -16,14 +16,14 @@ import java.util.LinkedList;
 import java.util.Random;
 
 public class AntTsp extends DemoProject {
-
+	private int debut=0;
 	private double c = 1.0;
 	private double alpha = 1;
 	private double beta = 5;
-	private double evaporation = 0.5;
+	private double evaporation = 0.8;
 	private double Q = 500;
 	private double numAntFactor = 0.1;
-	private double pr = 0.001;
+	private double pr = 0.002;
 	
 	
 
@@ -42,6 +42,7 @@ public class AntTsp extends DemoProject {
 	
 	public int[] bestTour;
 	public double bestTourLength;
+	public double bestTourLengthBIS;
 	
 	
 	public AntTsp(Evaluation evaluation) throws InvalidProjectException {
@@ -71,14 +72,17 @@ public class AntTsp extends DemoProject {
 	@Override
 	public void loop() {
 		
-	
+		debut++;
 		
 
 			setupAnts();
 			moveAnts();
 			updateTrails();
 			updateBest();
-		
+		if( bestTourLength!=bestTourLengthBIS){
+			System.out.println("Tour = " + bestTourLength +"Iteration = " + debut);
+			bestTourLengthBIS=bestTourLength;
+		}
 
 		
 	}
@@ -98,12 +102,7 @@ public class AntTsp extends DemoProject {
 			
 			}
 		 n = problem.getLength();
-			
-		m= (int) Math.sqrt((n*numAntFactor));
-		if(m<20){
-			m=20;
-		}
-m=15;
+		m=10;
 		rapide= new int[n];
 		
 
