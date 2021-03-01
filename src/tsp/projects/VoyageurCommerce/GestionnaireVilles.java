@@ -29,4 +29,10 @@ public class GestionnaireVilles {
     public int nombreVilles(){
         return listeVilles.size();
     }
+
+    public void listeVilles() {
+        for(int i = 0; i < listeVilles.size(); i++) {
+            System.out.println(listeVilles.get(i).getCoordinates());
+        }
+    }
 }

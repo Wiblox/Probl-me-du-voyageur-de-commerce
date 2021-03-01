@@ -10,7 +10,7 @@ public class Circuit {
     //Création de deux liste de coordonée, correspondant au position de chaque villes.
     public GestionnaireVilles gestionnaireVilles;
 
-    public ArrayList<Coordinates> circuit;
+    public ArrayList<Coordinates> circuit = new ArrayList<>();
 
     public double fitness;
     public int distance;
@@ -21,16 +21,10 @@ public class Circuit {
         this.fitness = 0.0;
         this.distance = 0;
 
-        this.circuit = new ArrayList<>(gestionnaireVilles.listeVilles.size());
-    }
+        for(int i = 0; i < gestionnaireVilles.nombreVilles(); i++){
+            circuit.add(null);
+        }
 
-    //Constructeur qui permet de récupérer le précédent circuit.
-    public Circuit(GestionnaireVilles gestionnaireVilles, ArrayList<Coordinates> circuit) {
-        this.gestionnaireVilles = gestionnaireVilles;
-        this.fitness = 0.0;
-        this.distance = 0;
-
-        this.circuit = circuit;
     }
 
     public int lengthCircuit() { return circuit.size(); }
@@ -38,7 +32,7 @@ public class Circuit {
     public Coordinates getVille(int posCircuit) { return circuit.get(posCircuit); }
 
     public void setVille(int posCircuit, Coordinates ville) {
-        circuit.add(posCircuit, ville);
+        circuit.set(posCircuit, ville);
         this.fitness = 0.0;
         this.distance = 0;
     }
@@ -75,6 +69,7 @@ public class Circuit {
                     villeArrivee = getVille(0);
                 circuitDistance += villeOrigine.distance(villeArrivee);
             }
+            distance = circuitDistance;
         }
         return distance;
     }
