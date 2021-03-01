@@ -23,7 +23,7 @@ public class AntTsp extends DemoProject {
 	private double evaporation = 0.5;
 	private double Q = 500;
 	private double numAntFactor = 0.1;
-	private double pr = 0.0005;
+	private double pr = 0.001;
 	
 	
 
@@ -103,9 +103,8 @@ public class AntTsp extends DemoProject {
 		if(m<20){
 			m=20;
 		}
-
+m=15;
 		rapide= new int[n];
-		distance = new double[n];
 		
 
 		// all memory allocations done here
@@ -296,20 +295,13 @@ public class AntTsp extends DemoProject {
 			
 			for (Ant a : ants) {
 			if (a.tourLength() < bestTourLength) {
-				try {
-					File myObj = new File(problem.getLength() + "chemin.txt");
-					myObj.createNewFile();
-					FileWriter myWriter = new FileWriter(myObj.getAbsoluteFile(), false);
+			
 				bestTourLength = a.tourLength();
 				bestTour = a.tour.clone();
 				Path path = new Path (bestTour);
 				
 				this.evaluation.evaluate (path);
-					myWriter.write(path.toString());
-					myWriter.close();
-				} catch (IOException e) {
-					e.printStackTrace();
-				}
+				
 			}
 	}}
 		
