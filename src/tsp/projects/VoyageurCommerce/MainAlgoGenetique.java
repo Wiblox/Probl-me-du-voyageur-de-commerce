@@ -12,7 +12,7 @@ public class MainAlgoGenetique {
     {
         ArrayList<Problem> problems = Problem.getProblems ();
 
-        Problem test = problems.get(3);
+        Problem test = problems.get(1);
 
         GestionnaireVilles gc = new GestionnaireVilles(test);
 
@@ -21,11 +21,6 @@ public class MainAlgoGenetique {
 
         AlgorithmeGenetique ga = new AlgorithmeGenetique(gc);
 
-        for(long i = 0; i < nbEvolution; i++) {
-            pop = ga.evoluerPopulation(pop);
-        }
-
-        /*
         long timeStart = System.currentTimeMillis();
         long time = System.currentTimeMillis();
         long timeEnd = System.currentTimeMillis() + 60000;
@@ -34,7 +29,7 @@ public class MainAlgoGenetique {
             if(((time - timeStart) % 1000) == 0 )
                 System.out.println("Distance a " + (time - timeStart)/1000 + "sec = " + pop.getFittest().getDistance());
             time = System.currentTimeMillis();
-        }*/
+        }
 
         System.out.println("Distance finale = " + pop.getFittest().getDistance());
 
