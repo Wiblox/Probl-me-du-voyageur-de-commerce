@@ -1,4 +1,4 @@
-package tsp.projects.exemple;
+package tsp.projects.ColonieDeFourmis;
 
 import tsp.evaluation.Evaluation;
 import tsp.evaluation.Path;

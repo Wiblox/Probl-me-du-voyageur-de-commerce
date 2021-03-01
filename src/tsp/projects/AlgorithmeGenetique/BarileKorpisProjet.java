@@ -1,8 +1,7 @@
-package tsp.projects.VoyageurCommerce;
+package tsp.projects.AlgorithmeGenetique;
 
 import tsp.evaluation.Evaluation;
 import tsp.projects.InvalidProjectException;
-import tsp.projects.Project;
 
 public class BarileKorpisProjet{
     /**
@@ -15,7 +14,7 @@ public class BarileKorpisProjet{
         //super(evaluation);
         //this.addAuthor ("Nicolas Barile");
         //this.addAuthor ("Vivien Korpis");
-        //this.setMethodName ("Premier Algo de Recherche");
+        //this.setMethodName ("Algorithme Génétique Premier Essaie");
     }
 
     public void initialization() {
