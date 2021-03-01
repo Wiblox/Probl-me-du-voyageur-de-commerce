@@ -28,4 +28,8 @@ public final class Coordinates
 		double dy = this.y - c.y;
 		return Math.sqrt (dx * dx + dy * dy);
 	}
+
+	public String getCoordinates(){
+		return "x =" + x + ", y =" + y;
+	}
 }
