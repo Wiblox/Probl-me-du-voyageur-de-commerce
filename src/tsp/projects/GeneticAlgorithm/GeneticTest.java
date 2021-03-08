@@ -1,6 +1,10 @@
 package tsp.projects.GeneticAlgorithm;
 
 
+import tsp.evaluation.Problem;
+
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Random;
 
 /**
@@ -11,35 +15,45 @@ import java.util.Random;
 public class GeneticTest {
 
     public static void main(String[] args) {
-        Point[] points = new Point[30];
+        ArrayList<Problem> problems = Problem.getProblems ();
+
+        Problem test = problems.get(0);
+
+        Point[] points = new Point[test.getLength()];
+
+
         for (int i = 0; i < points.length; i++) {
             points[i] = new Point();
-            points[i].x = new Random().nextInt(200);
-            points[i].y = new Random().nextInt(200);
+            points[i].x = test.getCoordinates(i).getX();
+            points[i].y = test.getCoordinates(i).getY();
         }
 
         int[] best;
 
         //=======================method 1=======================
-        //GeneticAlgorithm ga = new GeneticAlgorithm();
-        //best = ga.tsp(getDist(points));
+        GeneticAlgorithm ga = new GeneticAlgorithm();
+        best = ga.tsp(getDist(points));
 
-        /*int n = 0;
-        while (n++ < 100) {
+        long timeStart = System.currentTimeMillis();
+        long time = System.currentTimeMillis();
+        long timeEnd = System.currentTimeMillis() + 60000;
+        while (time < timeEnd) {
             best = ga.nextGeneration();
 
             System.out.println("best distance:" + ga.getBestDist() +
                     " current generation:" + ga.getCurrentGeneration() +
                     " mutation times:" + ga.getMutationTimes());
-            System.out.print("best path:");
-            for (int i = 0; i < best.length; i++) {
-                System.out.print(best[i] + " ");
-            }
-            System.out.println();
-        }*/
+            //System.out.print("best path:");
+            //for (int i = 0; i < best.length; i++) {
+            //    System.out.print(best[i] + " ");
+            //}
+            //if(((time - timeStart) % 1000) == 0 )
+                System.out.println("Temps écoulé : " + (time - timeStart)/1000 + "sec");
+            time = System.currentTimeMillis();
+        }
 
         //=======================method 2========================
-        GeneticAlgorithm ga = GeneticAlgorithm.getInstance();
+        /*GeneticAlgorithm ga = GeneticAlgorithm.getInstance();
 
         ga.setMaxGeneration(1000);
         ga.setAutoNextGeneration(true);
@@ -47,8 +61,10 @@ public class GeneticTest {
         System.out.print("best path:");
         for (int i = 0; i < best.length; i++) {
             System.out.print(best[i] + " ");
-        }
-        System.out.println();
+        }*/
+
+
+        System.out.println("Meilleure distance = " + ga.getBestDist());
     }
 
     private static float[][] getDist(Point[] points) {

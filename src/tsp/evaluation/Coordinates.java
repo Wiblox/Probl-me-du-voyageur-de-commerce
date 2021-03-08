@@ -6,7 +6,17 @@ package tsp.evaluation;
  */
 public final class Coordinates
 {
-	private double x, y;
+	public double getX() {
+		return x;
+	}
+
+	private double x;
+
+	public double getY() {
+		return y;
+	}
+
+	private double y;
 	
 	/**
 	 * @param x Abscisse
