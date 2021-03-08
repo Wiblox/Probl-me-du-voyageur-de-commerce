@@ -30,17 +30,11 @@ public class GeneticAlgorithm {
     private float[] roulette;
 
     private boolean isAutoNextGeneration = false;
-
-    public static GeneticAlgorithm getInstance() {
-        return GeneticAlgorithmHolder.instance;
-    }
-
-    private static class GeneticAlgorithmHolder {
-        private static GeneticAlgorithm instance = new GeneticAlgorithm();
-    }
+    
+  
 
     /**
-     * 点集间的邻接矩阵
+     * La matrice de contiguïté entre les ensembles de points
      *
      * @param matrix
      * @return
@@ -61,7 +55,7 @@ public class GeneticAlgorithm {
     }
 
     /**
-     * 初始化
+     * initialiser
      */
     private void init() {
         mutationTimes = 0;
@@ -77,10 +71,15 @@ public class GeneticAlgorithm {
         population = new int[populationSize][pointNum];
 
         //initDist(points);
-        // 父代
         for (int i = 0; i < populationSize; i++) {
             population[i] = randomIndivial(pointNum);
         }
+        evaluateBestIndivial();
+    }
+    
+    
+    public void boost(int[] truc){
+        population[0]=truc;
         evaluateBestIndivial();
     }
 
@@ -90,29 +89,29 @@ public class GeneticAlgorithm {
     public int[] nextGeneration() {
         currentGeneration++;
 
-        // 选择
+        // selection
         selection();
-        // 交叉
+        // crossover
         crossover();
-        // 变异
+        // mutation
         mutation();
-        // 评价最好
+        // evaluate Best Indivial
         evaluateBestIndivial();
 
         return bestIndivial;
     }
 
     /**
-     * 选择
+     * selection
      */
     private void selection() {
         int[][] parents = new int[populationSize][pointNum];
 
         int initnum = 4;
-        parents[0] = population[currentBestPosition]; // 当前种群中最好的个体
-        parents[1] = exchangeMutate(bestIndivial.clone()); // 对最好的个体进行交换变异
-        parents[2] = insertMutate(bestIndivial.clone()); // 对最好的个体进行插入变异
-        parents[3] = bestIndivial.clone(); // 所有代中最好的个体
+        parents[0] = population[currentBestPosition]; // Le meilleur individu de la population actuelle
+        parents[1] = exchangeMutate(bestIndivial.clone()); // Variation des taux de change pour les meilleurs individus
+        parents[2] = insertMutate(bestIndivial.clone()); // Variation d'insertion pour les meilleurs individus
+        parents[3] = bestIndivial.clone(); // Le meilleur individu de toutes les générations
 
         setRoulette();
         for (int i = initnum; i < populationSize; i++) {

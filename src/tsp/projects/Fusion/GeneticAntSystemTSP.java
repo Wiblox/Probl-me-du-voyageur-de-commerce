@@ -111,6 +111,14 @@ public class GeneticAntSystemTSP {
         alfa = a;
 
     }
+    public void boost( int[] truc){
+        int[] trucd = new int[noAnts];
+        trucd[noAnts]=truc[0];
+        ants[0].setTour(trucd);
+        ants[0].setTourLength(computeTourLength(trucd));
+        
+    
+    }
     public void setBeta(double b){
         beta = b;
     }

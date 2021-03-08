@@ -56,6 +56,9 @@ public class SingleAnt {
         tour[idx] = val;
 
     }
+    public void setTour(int[]  val){
+        tour = val;
+    }
     public int[] getTour(){
         return tour;
     }
