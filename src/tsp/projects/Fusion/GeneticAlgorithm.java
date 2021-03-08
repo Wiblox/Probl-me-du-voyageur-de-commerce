@@ -1,4 +1,4 @@
-package tsp.projects.GeneticAlgorithm;
+package tsp.projects.Fusion;
 
 import java.util.Arrays;
 import java.util.Random;

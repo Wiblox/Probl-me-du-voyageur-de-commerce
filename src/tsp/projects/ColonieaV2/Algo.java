@@ -23,7 +23,7 @@ public class Algo extends DemoProject {
 		boolean doOpt3 = true;
 		int noAnts = 60;
 		double alfa = 0.2;
-		double beta = 10;
+		double beta = 30;
 		double globalEvapRate = 0.8;
 		gas = new GeneticAntSystemTSP(problem.getLength(), noAnts, alfa, beta, globalEvapRate, doOpt2, doOpt3, 1000, 1);
 		gas.initData();

@@ -36,7 +36,7 @@ public final class Main extends OutputWriter
     private static Main instance = null;
     private static final String LOG_FILE = "tsp.log";
 //	private static final int NB_RUNS = 100;
-	private static final int NB_SECONDS = 600;
+	private static final int NB_SECONDS = 60;
     private static final int NB_RUNS = 1;
 //    private static final int NB_SECONDS = 10;
     
@@ -127,8 +127,8 @@ public final class Main extends OutputWriter
         for (int i = 0; i < problems.size (); i++)
             solutions.add (new ArrayList <Solution> ());
         Reflections reflections = new Reflections ("tsp.projects");
-        Set<Class<? extends Project>> subClassesTmp = reflections.getSubTypesOf (Project.class);
-        //Set<Class<? extends CompetitorProject>> subClassesTmp = reflections.getSubTypesOf (CompetitorProject.class);
+        //Set<Class<? extends Project>> subClassesTmp = reflections.getSubTypesOf (Project.class);
+        Set<Class<? extends CompetitorProject>> subClassesTmp = reflections.getSubTypesOf (CompetitorProject.class);
         ArrayList<Class<? extends Project>> subClasses = new ArrayList <Class <? extends Project>> ();;
         for (Class<? extends Project> subClass : subClassesTmp)
         {
