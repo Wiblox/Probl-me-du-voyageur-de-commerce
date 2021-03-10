@@ -6,17 +6,7 @@ package tsp.evaluation;
  */
 public final class Coordinates
 {
-	public double getX() {
-		return x;
-	}
-
-	private double x;
-
-	public double getY() {
-		return y;
-	}
-
-	private double y;
+	private double x, y;
 	
 	/**
 	 * @param x Abscisse
@@ -37,9 +27,5 @@ public final class Coordinates
 		double dx = this.x - c.x;
 		double dy = this.y - c.y;
 		return Math.sqrt (dx * dx + dy * dy);
-	}
-
-	public String getCoordinates(){
-		return "x =" + x + ", y =" + y;
 	}
 }

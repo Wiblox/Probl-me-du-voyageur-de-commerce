@@ -255,10 +255,10 @@ public class GeneticAntSystemTSP {
         }
     }
     public void decisionRule(int k, int step){
-        /* k = identificator furnica */
-        /* step = pasul curent din constructia solutiei */
+        /* k = identificateur furnica */
+        /* step = Les solutions de construction ne sont pas les mêmes pour tous. */
 
-        int c = ants[k].getTour(step-1); // orasul anterior al furnicii curente
+        int c = ants[k].getTour(step-1); // l'ancienne ville de la fourmi actuelle
         double sumProb = 0.0;
 
         double selectionProbability[] = new double[noNodes];

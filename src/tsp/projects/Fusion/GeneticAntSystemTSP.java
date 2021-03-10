@@ -147,12 +147,16 @@ public class GeneticAntSystemTSP {
         return bestTour;
     }
     public int[] getBestTourAlgo(){
+    
         int[] truc= new int[noNodes];
+    
         int[] bestTour = getBestTour();
+    
         for(int j = 0; j <noNodes; j++){
             truc[j]=bestTour[j];
         }
-    return truc;
+    
+        return truc;
     }
         
         public int getBestTourLength(){

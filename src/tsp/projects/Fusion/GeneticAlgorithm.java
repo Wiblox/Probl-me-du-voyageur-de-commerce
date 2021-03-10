@@ -4,9 +4,9 @@ import java.util.Arrays;
 import java.util.Random;
 
 public class GeneticAlgorithm {
-    private static final float DEFAULT_CROSSOVER_PROBABILITY = 0.9f; // Probabilité de croisement par défaut
-    private static final float DEFAULT_MUTATION_PROBABILITY = 0.05f; // Probabilité de mutation par défaut
-    private static final int DEFAULT_POPULATION_SIZE = 50; // Taille de la population par défaut
+    private static final float DEFAULT_CROSSOVER_PROBABILITY = 0.1f; // Probabilité de croisement par défaut
+    private static final float DEFAULT_MUTATION_PROBABILITY = 0.5f; // Probabilité de mutation par défaut
+    private static final int DEFAULT_POPULATION_SIZE = 1000; // Taille de la population par défaut
 
     private float crossoverProbability = DEFAULT_CROSSOVER_PROBABILITY; // probabilité de croisement
     private float mutationProbability = DEFAULT_MUTATION_PROBABILITY; // probabilité de mutation
@@ -79,12 +79,15 @@ public class GeneticAlgorithm {
     
     
     public void boost(int[] truc){
-        population[0]=truc;
+        for (int i = 0; i < populationSize; i++) {
+            population[1][i]=truc [i];
+            
+        }
         evaluateBestIndivial();
     }
 
     /**
-     * 下一代
+     *  la prochaine génération
      */
     public int[] nextGeneration() {
         currentGeneration++;
@@ -143,7 +146,7 @@ public class GeneticAlgorithm {
     }
 
     /**
-     * 模拟转盘，进行子代选取
+     * Simulation d'un plateau tournant pour la sélection de la progéniture
      *
      * @param ran
      * @return

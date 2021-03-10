@@ -2,10 +2,11 @@ package tsp.projects.ColonieaV2;
 
 import tsp.evaluation.Evaluation;
 import tsp.evaluation.Path;
+import tsp.projects.CompetitorProject;
 import tsp.projects.DemoProject;
 import tsp.projects.InvalidProjectException;
 
-public class Algo extends DemoProject {
+public class Algo extends CompetitorProject {
 	
 	private GeneticAntSystemTSP gas;
 	private double eval=0;
@@ -20,12 +21,12 @@ public class Algo extends DemoProject {
 	@Override
 	public void initialization() {
 		boolean doOpt2 = true;
-		boolean doOpt3 = true;
-		int noAnts = 60;
-		double alfa = 0.2;
-		double beta = 30;
-		double globalEvapRate = 0.8;
-		gas = new GeneticAntSystemTSP(problem.getLength(), noAnts, alfa, beta, globalEvapRate, doOpt2, doOpt3, 1000, 1);
+		boolean doOpt3 = false;
+		int noAnts = 50;
+		double alfa = 0.3;
+		double beta = 20;
+		double globalEvapRate = 0.5;
+		gas = new GeneticAntSystemTSP(problem.getLength(), noAnts, alfa, beta, globalEvapRate, doOpt2, doOpt3, 1000, 0);
 		gas.initData();
 		for(int i=0;i<=problem.getLength()-1;i++){
 			for(int j=0;j<=problem.getLength()-1;j++) {

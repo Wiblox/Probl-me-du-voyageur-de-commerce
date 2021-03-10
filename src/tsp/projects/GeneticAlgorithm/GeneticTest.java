@@ -22,8 +22,7 @@ public class GeneticTest {
 		
 		for (int i = 0; i < points.length; i++) {
 			points[i] = new Point();
-			points[i].x = test.getCoordinates(i).getX();
-			points[i].y = test.getCoordinates(i).getY();
+
 		}
 		
 		int[] best;

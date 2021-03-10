@@ -4,14 +4,17 @@ package tsp.projects.Fusion;
 import tsp.evaluation.Evaluation;
 import tsp.evaluation.Path;
 import tsp.projects.CompetitorProject;
+import tsp.projects.DemoProject;
 import tsp.projects.InvalidProjectException;
+
+import java.util.Arrays;
 
 /**
  * GeneticTest
  *
  * @author: onlylemi
  */
-public class Algo extends CompetitorProject {
+public class Algo extends DemoProject {
 	private static GeneticAntSystemTSP gas;
 	private static double eval = 0;
 	private static double qeval = 0;
@@ -21,6 +24,9 @@ public class Algo extends CompetitorProject {
 	private int stagnationF;
 	private int stagnationG;
 	private boolean ant;
+	private double temp;
+	private double coolingRate;
+	private double test;
 	
 	
 	public Algo(Evaluation evaluation) throws InvalidProjectException {
@@ -42,8 +48,8 @@ public class Algo extends CompetitorProject {
 		boolean doOpt2 = true;
 		boolean doOpt3 = true;
 		int noAnts = 60;
-		double alfa = 0.2;
-		double beta = 30;
+		double alfa = 0.3;
+		double beta = 60;
 		double globalEvapRate = 0.8;
 		getBestDist = 0;
 		
@@ -70,7 +76,13 @@ public class Algo extends CompetitorProject {
 		gas.computeHeuristic();
 		gas.initAnts();
 		
+		test = 0;
+		//Cooling rate
 		
+
+		
+		// We would like to keep track if the best solution
+		// Assume best solution is the current solution
 	}
 	
 	
@@ -99,19 +111,23 @@ public class Algo extends CompetitorProject {
 			} else {
 				stagnationF = 0;
 			}
-			if(stagnationF>50){
-				ant=false;
-				stagnationF=0;
+			if (stagnationF > 100000) {
+				ant = false;
+				stagnationF = 0;
 				ga.boost(gas.getBestTourAlgo());
 				
+				
+				
+				
 			}
+			
 		} else {
 			
 			int[] best = ga.nextGeneration();
 			Path path = new Path(ga.getBestIndivial());
 			this.evaluation.evaluate(path);
 			if (qeval != this.evaluation.getBestEvaluation()) {
-				System.out.println("\n Iteration GENETIQUE = " + ga.getMutationTimes() + " best distance = " + this.evaluation.getBestEvaluation());
+				System.out.println("\n Iteration GENETIQUE = " + ga.getCurrentGeneration() + " best distance = " + this.evaluation.getBestEvaluation());
 				qeval = this.evaluation.getBestEvaluation();
 				
 			}
@@ -120,16 +136,14 @@ public class Algo extends CompetitorProject {
 			} else {
 				stagnationG = 0;
 			}
-			if(stagnationG>100){
+			if(stagnationG>3000){
 				ant=true;
 				stagnationG=0;
 				gas.boost(best);
 				gas.localSearch();
 				gas.updatePheromones();
-				
 			}
 		}
-		
 	}
 }
 

@@ -5,8 +5,8 @@ import java.util.Random;
 
 public class GeneticAlgorithm {
     private static final float DEFAULT_CROSSOVER_PROBABILITY = 0.9f; // Probabilité de croisement par défaut
-    private static final float DEFAULT_MUTATION_PROBABILITY = 0.05f; // Probabilité de mutation par défaut
-    private static final int DEFAULT_POPULATION_SIZE = 50; // Taille de la population par défaut
+    private static final float DEFAULT_MUTATION_PROBABILITY = 0.2f; // Probabilité de mutation par défaut
+    private static final int DEFAULT_POPULATION_SIZE = 20; // Taille de la population par défaut
 
     private float crossoverProbability = DEFAULT_CROSSOVER_PROBABILITY; // probabilité de croisement
     private float mutationProbability = DEFAULT_MUTATION_PROBABILITY; // probabilité de mutation
